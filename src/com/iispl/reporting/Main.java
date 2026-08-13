@@ -5,10 +5,7 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		 JasperReportRunner.generateMICRReport();
-		 
-		
+		// TODO Auto-generated method stub	
 		Scanner scanner=new Scanner(System.in);
 		int choice;
 		do {
@@ -22,7 +19,7 @@ public class Main {
 			choice=scanner.nextInt();
 			
 			switch(choice) {
-			case 1:
+			case 1:JasperDailyProcessingReportRunner.generateDailyChequeReport();
 				break;
 			case 2:
 				JasperRejectedReportRunner.generateRejectedChequeReport();
@@ -30,7 +27,7 @@ public class Main {
 			case 3:
 				JasperReportRunner.generateMICRReport();
 				break;
-			case 4:
+			case 4:HighValueReportRunner.generateHighValueReport();
 				break;
 			case 5:
 				BatchProcessingSummaryRunner.generateBatchProcessingSummary();
