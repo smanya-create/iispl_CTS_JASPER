@@ -14,7 +14,7 @@
     rightMargin="30"
     topMargin="30"
     bottomMargin="30">
-
+<parameter name="MICR_STATUS" class="java.lang.String"/>
     <queryString>
         <![CDATA[
             SELECT cheque_number,
@@ -24,7 +24,7 @@
                    cheque_amount,
                    micr_status
             FROM cheque_transaction
-            WHERE micr_status = 'INVALID'
+            WHERE micr_status = $P{MICR_STATUS}
         ]]>
     </queryString>
 

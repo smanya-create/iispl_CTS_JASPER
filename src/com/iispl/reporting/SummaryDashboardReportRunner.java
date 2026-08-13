@@ -1,6 +1,7 @@
 package com.iispl.reporting;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,23 +11,23 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 
-public class JasperReportRunner {
-	public static void generateMICRReport() {
-
+public class SummaryDashboardReportRunner {
+	public static void generateDashboard() {
 		try {
 
 			Connection connection = DBConnection.getConnection();
 
-			String jrxml = "report/micr_report.jrxml";
+			String jrxml = "report/summarydashboard.jrxml";
 
-			String pdf = "output/micr_report.pdf";
+			String pdf = "output/summarydashboard.pdf";
 
 			// Compile JRXML
 			JasperReport report = JasperCompileManager.compileReport(jrxml);
 
 			// Parameters
 			Map<String, Object> parameters = new HashMap<>();
-			parameters.put("MICR_STATUS","INVALID");			// Fill report
+			parameters.put("p_date", Date.valueOf("2026-08-13"));
+					// Fill report
 			JasperPrint print = JasperFillManager.fillReport(report, parameters, connection);
 
 			// Export PDF
@@ -34,7 +35,7 @@ public class JasperReportRunner {
 
 			connection.close();
 
-			System.out.println("MICR report generated successfully!");
+			System.out.println("Summary Dashboard generated successfully!");
 
 		} catch (Exception e) {
 
