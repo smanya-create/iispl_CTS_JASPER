@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jasperReport
+    xmlns="http://jasperreports.sourceforge.net/jasperreports"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports
+                        http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+    name="micr_repair_report"
+    pageWidth="842"
+    pageHeight="595"
+    orientation="Landscape"
+    columnWidth="782"
+    leftMargin="30"
+    rightMargin="30"
+    topMargin="30"
+    bottomMargin="30">
+
+    <queryString>
+        <![CDATA[
+            SELECT cheque_number,
+                   bank_name,
+                   branch_name,
+                   micr_code,
+                   cheque_amount,
+                   micr_status
+            FROM cheque_transaction
+            WHERE micr_status = 'INVALID'
+        ]]>
+    </queryString>
+
+    <field name="cheque_number" class="java.lang.String"/>
+    <field name="bank_name" class="java.lang.String"/>
+    <field name="branch_name" class="java.lang.String"/>
+    <field name="micr_code" class="java.lang.String"/>
+    <field name="cheque_amount" class="java.math.BigDecimal"/>
+    <field name="micr_status" class="java.lang.String"/>
+
+    <title>
+        <band height="60">
+
+            <staticText>
+                <reportElement
+                    x="0"
+                    y="15"
+                    width="782"
+                    height="30"/>
+
+                <textElement textAlignment="Center"/>
+
+                <text>
+                    <![CDATA[CTS - MICR Repair Report]]>
+                </text>
+            </staticText>
+
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="30">
+
+            <staticText>
+                <reportElement x="0" y="0" width="120" height="30"/>
+                <text><![CDATA[Cheque No]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="120" y="0" width="150" height="30"/>
+                <text><![CDATA[Bank]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="270" y="0" width="120" height="30"/>
+                <text><![CDATA[Branch]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="390" y="0" width="140" height="30"/>
+                <text><![CDATA[MICR Code]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="530" y="0" width="120" height="30"/>
+                <text><![CDATA[Amount]]></text>
+            </staticText>
+
+            <staticText>
+                <reportElement x="650" y="0" width="132" height="30"/>
+                <text><![CDATA[MICR Status]]></text>
+            </staticText>
+
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="30">
+
+            <textField>
+                <reportElement x="0" y="0" width="120" height="30"/>
+                <textFieldExpression>
+                    <![CDATA[$F{cheque_number}]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="120" y="0" width="150" height="30"/>
+                <textFieldExpression>
+                    <![CDATA[$F{bank_name}]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="270" y="0" width="120" height="30"/>
+                <textFieldExpression>
+                    <![CDATA[$F{branch_name}]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="390" y="0" width="140" height="30"/>
+                <textFieldExpression>
+                    <![CDATA[$F{micr_code}]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField pattern="#,##0.00">
+                <reportElement x="530" y="0" width="120" height="30"/>
+                <textFieldExpression>
+                    <![CDATA[$F{cheque_amount}]]>
+                </textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="650" y="0" width="132" height="30"/>
+                <textFieldExpression>
+                    <![CDATA[$F{micr_status}]]>
+                </textFieldExpression>
+            </textField>
+
+        </band>
+    </detail>
+
+</jasperReport>
