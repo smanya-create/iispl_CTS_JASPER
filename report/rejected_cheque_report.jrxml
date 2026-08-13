@@ -138,6 +138,9 @@
                 <text><![CDATA[Rejection Reason]]></text>
 
             </staticText>
+             <line>
+            <reportElement x="0" y="18" width="782" height="1"/>
+             </line>
 
         </band>
 

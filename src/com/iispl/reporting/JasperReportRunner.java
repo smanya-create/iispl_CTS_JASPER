@@ -42,21 +42,5 @@ public class JasperReportRunner {
 			e.printStackTrace();
 		}
 	}
-	
-	public static void generateRejectedChequeReport() {
-		try(Connection connection = DBConnection.getConnection()) {
-			JasperReport jasperReport = JasperCompileManager.compileReport("report/rejected_cheque_report.jrxml");
-			Map<String,Object> parameters = new HashMap<>();
-			parameters.put("P_STATUS", "REJECTED");
-			JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters,connection);
-			JasperExportManager.exportReportToPdfFile(jasperPrint, "output/rejected_cheque_report.pdf");
-			
-			System.out.println("Rejected cheque report generated successfully");
-		}
-		catch(Exception ex) {
-			System.out.println(ex.getMessage());
-			
-		}
-	}
 
 }
