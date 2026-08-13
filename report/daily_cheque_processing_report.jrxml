@@ -304,7 +304,6 @@
                 </textFieldExpression>
             </textField>
 
-
             <textField>
                 <reportElement
                     x="270"
