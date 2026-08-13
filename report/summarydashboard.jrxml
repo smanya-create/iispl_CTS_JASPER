@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jasperReport
+    xmlns="http://jasperreports.sourceforge.net/jasperreports"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://jasperreports.sourceforge.net/jasperreports
+        http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+    name="cts_daily_operations_dashboard"
+    pageWidth="842"
+    pageHeight="595"
+    orientation="Landscape"
+    columnWidth="782"
+    leftMargin="30"
+    rightMargin="30"
+    topMargin="30"
+    bottomMargin="30">
+
+
+    <parameter
+        name="p_date"
+        class="java.sql.Date"/>
+
+    <queryString>
+        <![CDATA[
+            SELECT
+                COUNT(*) AS total_cheques,
+
+                SUM(
+                    CASE
+                        WHEN status = 'APPROVED'
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS approved_cheques,
+
+                SUM(
+                    CASE
+                        WHEN status = 'REJECTED'
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS rejected_cheques,
+
+                SUM(
+                    CASE
+                        WHEN micr_status = 'INVALID'
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS micr_repair_pending,
+
+                SUM(
+                    CASE
+                        WHEN cheque_amount >= 200000
+                        THEN 1
+                        ELSE 0
+                    END
+                ) AS high_value_cheques,
+
+                SUM(cheque_amount) AS total_processing_amount
+
+            FROM cheque_transaction
+
+            WHERE processing_date = $P{p_date}
+        ]]>
+    </queryString>
+
+
+    <field
+        name="total_cheques"
+        class="java.lang.Long"/>
+
+    <field
+        name="approved_cheques"
+        class="java.lang.Long"/>
+
+    <field
+        name="rejected_cheques"
+        class="java.lang.Long"/>
+
+    <field
+        name="micr_repair_pending"
+        class="java.lang.Long"/>
+
+    <field
+        name="high_value_cheques"
+        class="java.lang.Long"/>
+
+    <field
+        name="total_processing_amount"
+        class="java.math.BigDecimal"/>
+
+    <title>
+
+        <band height="75">
+
+            <!-- Dashboard Title -->
+
+            <staticText>
+
+                <reportElement
+                    x="0"
+                    y="5"
+                    width="782"
+                    height="35"/>
+
+                <textElement textAlignment="Center">
+                    <font
+                        size="22"
+                        isBold="true"/>
+                </textElement>
+
+                <text>
+                    <![CDATA[CTS - DAILY OPERATIONS DASHBOARD]]>
+                </text>
+
+            </staticText>
+
+
+            <!-- Processing Date -->
+
+            <staticText>
+
+                <reportElement
+                    x="0"
+                    y="45"
+                    width="300"
+                    height="20"/>
+
+                <textElement textAlignment="Left">
+                    <font
+                        size="11"
+                        isBold="true"/>
+                </textElement>
+
+                <text>
+                    <![CDATA[Processing Date:]]>
+                </text>
+
+            </staticText>
+
+
+            <textField>
+
+                <reportElement
+                    x="105"
+                    y="45"
+                    width="150"
+                    height="20"/>
+
+                <textElement textAlignment="Left">
+                    <font size="11"/>
+                </textElement>
+
+                <textFieldExpression>
+                    <![CDATA[$P{p_date}]]>
+                </textFieldExpression>
+
+            </textField>
+
+        </band>
+
+    </title>
+
+
+    <summary>
+
+        <band height="350">
+
+
+<!-- CARD 1 - TOTAL CHEQUES -->
+<rectangle>
+    <reportElement
+        x="20"
+        y="20"
+        width="240"
+        height="100"/>
+</rectangle>
+
+<staticText>
+    <reportElement
+        x="20"
+        y="30"
+        width="240"
+        height="30"/>
+
+    <textElement textAlignment="Center" verticalAlignment="Middle">
+        <font
+            size="12"
+            isBold="true"/>
+    </textElement>
+
+    <text><![CDATA[TOTAL CHEQUES]]></text>
+</staticText>
+
+<textField>
+    <reportElement
+        x="20"
+        y="65"
+        width="240"
+        height="40"/>
+
+    <textElement textAlignment="Center" verticalAlignment="Middle">
+        <font
+            size="20"
+            isBold="true"/>
+    </textElement>
+
+    <textFieldExpression>
+        <![CDATA[$F{total_cheques}]]>
+    </textFieldExpression>
+</textField>
+
+<!-- CARD 2 - APPROVED CHEQUES -->
+<rectangle>
+    <reportElement
+        x="270"
+        y="20"
+        width="240"
+        height="100"/>
+</rectangle>
+
+<staticText>
+    <reportElement
+        x="270"
+        y="30"
+        width="240"
+        height="30"/>
+
+    <textElement textAlignment="Center" verticalAlignment="Middle">
+        <font
+            size="12"
+            isBold="true"/>
+    </textElement>
+
+    <text><![CDATA[APPROVED CHEQUES]]></text>
+</staticText>
+
+<textField>
+    <reportElement
+        x="270"
+        y="65"
+        width="240"
+        height="40"/>
+
+    <textElement textAlignment="Center" verticalAlignment="Middle">
+        <font
+            size="20"
+            isBold="true"/>
+    </textElement>
+
+    <textFieldExpression>
+        <![CDATA[$F{approved_cheques}]]>
+    </textFieldExpression>
+</textField>
+
+
+<!-- CARD 3 - REJECTED CHEQUES -->
+<rectangle>
+    <reportElement
+        x="520"
+        y="20"
+        width="240"
+        height="100"/>
+</rectangle>
+
+<staticText>
+    <reportElement
+        x="520"
+        y="30"
+        width="240"
+        height="30"/>
+
+    <textElement textAlignment="Center" verticalAlignment="Middle">
+        <font
+            size="12"
+            isBold="true"/>
+    </textElement>
+
+    <text><![CDATA[REJECTED CHEQUES]]></text>
+</staticText>
+
+<textField>
+    <reportElement
+        x="520"
+        y="65"
+        width="240"
+        height="40"/>
+
+    <textElement textAlignment="Center" verticalAlignment="Middle">
+        <font
+            size="20"
+            isBold="true"/>
+    </textElement>
+
+    <textFieldExpression>
+        <![CDATA[$F{rejected_cheques}]]>
+    </textFieldExpression>
+</textField>
+
+<!-- CARD 4 - PENDING CHEQUES -->
+       <rectangle>
+
+                <reportElement
+                    x="20"
+                    y="140"
+                    width="240"
+                    height="100"/>
+
+            </rectangle>
+
+
+            <staticText>
+
+                <reportElement
+                    x="20"
+                    y="155"
+                    width="240"
+                    height="30"/>
+
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font
+                        size="12"
+                        isBold="true"/>
+                </textElement>
+
+                <text>
+                    <![CDATA[MICR REPAIR PENDING]]>
+                </text>
+
+            </staticText>
+
+
+            <textField>
+
+                <reportElement
+                    x="20"
+                    y="195"
+                    width="240"
+                    height="40"/>
+
+                <textElement textAlignment="Center">
+                    <font
+                        size="20"
+                        isBold="true"/>
+                </textElement>
+
+                <textFieldExpression>
+                    <![CDATA[$F{micr_repair_pending}]]>
+                </textFieldExpression>
+
+            </textField>
+<!-- CARD 5 - HIGHVALUE CHEQUES -->
+            <rectangle>
+
+                <reportElement
+                    x="270"
+                    y="140"
+                    width="240"
+                    height="100"/>
+
+            </rectangle>
+
+
+            <staticText>
+
+                <reportElement
+                    x="270"
+                    y="155"
+                    width="240"
+                    height="30"/>
+
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font
+                        size="12"
+                        isBold="true"/>
+                </textElement>
+
+                <text>
+                    <![CDATA[HIGH VALUE CHEQUES]]>
+                </text>
+
+            </staticText>
+
+
+            <textField>
+
+                <reportElement
+                    x="270"
+                    y="195"
+                    width="240"
+                    height="40"/>
+
+                <textElement textAlignment="Center">
+                    <font
+                        size="20"
+                        isBold="true"/>
+                </textElement>
+
+                <textFieldExpression>
+                    <![CDATA[$F{high_value_cheques}]]>
+                </textFieldExpression>
+
+            </textField>
+<!-- CARD 6 - TOTAL PROCESSING AMOUNT -->
+            <rectangle>
+
+                <reportElement
+                    x="520"
+                    y="140"
+                    width="240"
+                    height="100"/>
+
+            </rectangle>
+
+
+            <staticText>
+
+                <reportElement
+                    x="520"
+                    y="155"
+                    width="240"
+                    height="30"/>
+
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font
+                        size="12"
+                        isBold="true"/>
+                </textElement>
+
+                <text>
+                    <![CDATA[TOTAL PROCESSING AMOUNT]]>
+                </text>
+
+            </staticText>
+
+
+            <textField pattern="₹#,##0.00">
+
+                <reportElement
+                    x="520"
+                    y="195"
+                    width="240"
+                    height="40"/>
+
+                <textElement textAlignment="Center">
+                    <font
+                        size="16"
+                        isBold="true"/>
+                </textElement>
+
+                <textFieldExpression>
+                    <![CDATA[$F{total_processing_amount}]]>
+                </textFieldExpression>
+
+            </textField>
+
+
+            <staticText>
+
+                <reportElement
+                    x="20"
+                    y="275"
+                    width="740"
+                    height="30"/>
+
+                <textElement textAlignment="Center" verticalAlignment="Middle">
+                    <font
+                        size="11"
+                        isBold="true"/>
+                </textElement>
+
+                <text>
+                    <![CDATA[CTS Cheque Processing - Daily Operations Summary]]>
+                </text>
+
+            </staticText>
+
+
+        </band>
+
+    </summary>
+
+</jasperReport>
