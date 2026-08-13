@@ -303,7 +303,6 @@
                     <![CDATA[$F{bank_name}]]>
                 </textFieldExpression>
             </textField>
-
             <textField>
                 <reportElement
                     x="270"
