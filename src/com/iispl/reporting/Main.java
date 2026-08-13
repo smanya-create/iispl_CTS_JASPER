@@ -8,7 +8,7 @@ public class Main {
 		// TODO Auto-generated method stub
 		 JasperReportRunner.generateMICRReport();
 		 
-		 HighValueReportRunner.generateHighValueReport();
+		
 
 	}
 
